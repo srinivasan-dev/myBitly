@@ -11,5 +11,6 @@ Installation
 5. then, run "npm start".
 
 Note: 
+--------------------
 
 Make sure your port 3000 is free, otherwise use different ports
