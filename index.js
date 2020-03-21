@@ -118,8 +118,8 @@ app.get('/delete/:id', function (req, res) {
 
 const PORT = process.env.Secure_port || 3000;
 
-app.listen(PORT, function() {
-   console.log("port is running in "+PORT);
+app.listen(3000, function() {
+   console.log("port is running in 3000 = "+PORT);
     
 });
 
