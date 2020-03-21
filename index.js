@@ -88,7 +88,7 @@ app.get('/:urlID', function (req, res) {
         if (err) {
             throw err;
         }
-        if(data){
+        // if(data){
             URLModel.findByIdAndUpdate({_id:data.id}, {$inc:{clickCount: 1}}, function (err, updatedData) {
                 if (err) {
                     throw err;
@@ -99,7 +99,7 @@ app.get('/:urlID', function (req, res) {
             })
     
             res.redirect(data.longUrl)
-        }
+        // }
 
     })
  })
