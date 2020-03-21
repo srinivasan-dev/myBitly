@@ -89,6 +89,11 @@ app.get('/:urlID', function (req, res) {
             throw err;
         }
         // if(data){
+            console.log("redirecting to new long url");
+            console.log(data.longUrl);
+            
+            console.log(data);
+            
             URLModel.findByIdAndUpdate({_id:data.id}, {$inc:{clickCount: 1}}, function (err, updatedData) {
                 if (err) {
                     throw err;
