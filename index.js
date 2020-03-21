@@ -103,9 +103,9 @@ app.get('/:urlID', function (req, res) {
                 // console.log(updatedData);
                 
             })
-            setTimeout(() => {
+           
                 res.redirect(data.longUrl)                
-            }, 1000);
+            
         }
 
     })
