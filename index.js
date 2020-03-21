@@ -116,10 +116,10 @@ app.get('/delete/:id', function (req, res) {
     })
 })
 
+const PORT = process.env.Secure_port || 3000;
 
-app.listen(process.env.Secure_port || 5000, function() {
-   console.log("port is running in "+process.env.Secure_port);
-    console.log("running...........");
+app.listen(PORT, function() {
+   console.log("port is running in "+PORT);
     
 });
 
