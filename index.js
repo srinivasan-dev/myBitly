@@ -47,7 +47,8 @@ app.get('/', function (req, res) {
     let allUrl = URLModel.find(function (err, result) {
         // console.log(result);
         res.render('home', {
-            urlResult: result
+            urlResult: result,
+            hostName: process.env.Domain_Name
         })
       })
     // res.render('home');
