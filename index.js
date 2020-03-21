@@ -88,7 +88,7 @@ app.get('/:urlID', function (req, res) {
         if (err) {
             throw err;
         }
-        // if(data){
+        if(data){
             console.log("redirecting to new long url");
             console.log(data.longUrl);
             
@@ -102,9 +102,10 @@ app.get('/:urlID', function (req, res) {
                 // console.log(updatedData);
                 
             })
-    
-            res.redirect(data.longUrl)
-        // }
+            setTimeout(() => {
+                res.redirect(data.longUrl)                
+            }, 1000);
+        }
 
     })
  })
