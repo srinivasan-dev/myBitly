@@ -2,8 +2,31 @@ const express = require('express')
 const app = express();
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const env = require('dotenv').config();
 
-mongoose.connect('mongodb://localhost:27017/URLShortener');
+app.use(express.json()); // Make sure it comes back as json
+
+// mongoose.connect('mongodb://localhost:27017/URLShortener');
+// mongoose.connect('mongodb+srv://url_shortner_chief:d6SU7UOGpGlSlWex@url-shortner-rbrr2.mongodb.net/test?retryWrites=true&w=majority');
+// mongoose.connect('mongodb+srv://urlshortnerchief:d6SU7UOGpGlSlWex@url-shortner-rbrr2.mongodb.net/test?retryWrites=true&w=majority');
+mongoose.connect(process.env.DB_HOST, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+// cloud mongo db 
+
+
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://url_shortner_chief:d6SU7UOGpGlSlWex@url-shortner-rbrr2.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   console.log("connection success");
+  
+//   // perform actions on the collection object
+//   client.close();
+// });
+
 
 const {URLModel } = require('./models/urlshort')
 
@@ -22,7 +45,7 @@ app.get('/', function (req, res) {
     // res.send(app.get('title'));
 
     let allUrl = URLModel.find(function (err, result) {
-        console.log(result);
+        // console.log(result);
         res.render('home', {
             urlResult: result
         })
@@ -39,7 +62,7 @@ app.get('/', function (req, res) {
     // create  a short URL 
     // Store In DB 
     console.log(req.body.longurl);
-    console.log(generateUrl());
+    // console.log(generateUrl());
     
     let urlShort = new URLModel({
         longUrl: req.body.longurl,
@@ -65,17 +88,19 @@ app.get('/:urlID', function (req, res) {
         if (err) {
             throw err;
         }
+        if(data){
+            URLModel.findByIdAndUpdate({_id:data.id}, {$inc:{clickCount: 1}}, function (err, updatedData) {
+                if (err) {
+                    throw err;
+                }
+                console.log("link count increased");
+                // console.log(updatedData);
+                
+            })
+    
+            res.redirect(data.longUrl)
+        }
 
-        URLModel.findByIdAndUpdate({_id:data.id}, {$inc:{clickCount: 1}}, function (err, updatedData) {
-            if (err) {
-                throw err;
-            }
-            console.log("link count increased");
-            // console.log(updatedData);
-            
-        })
-
-        res.redirect(data.longUrl)
     })
  })
 
@@ -92,8 +117,8 @@ app.get('/delete/:id', function (req, res) {
 })
 
 
-app.listen(3000, function() {
-   console.log("port is running in 3000");
+app.listen(process.env.Secure_port, function() {
+   console.log("port is running in "+process.env.Secure_port);
     
 });
 
